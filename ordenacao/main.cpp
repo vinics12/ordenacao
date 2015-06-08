@@ -25,10 +25,11 @@ void showVetor(int *vet){
 }
 int main(int argc, const char * argv[]) {
     for(int i=0;i<tam;i++){
-        vetorQuick[i]=rand()%1000;
-        vetorSelDir[i]=rand()%1000;
-        vetorOrdDir[i]=rand()%1000;
-        vetorBubble[i]=rand()%1000;
+        int v =rand()%1000;
+        vetorQuick[i]=v;
+        vetorSelDir[i]=v;
+        vetorOrdDir[i]=v;
+        vetorBubble[i]=v;
     }
     showVetor(vetorQuick);
     int trocas[4]={0,0,0,0};
