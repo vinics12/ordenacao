@@ -9,13 +9,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define tam 10000
-int vetorQuick[tam],vetorSelDir[tam],vetorOrdDir[tam],vetorBubble[tam];
+#define tam 1000
+int vetorQuick[tam],vetorSelDir[tam],vetorOrdDir[tam],vetorBubble[tam], vetorShell[tam];
 void quickSort( int p, int r,int *trocas);
 int separa(int p, int r);
 int selecaoDireta();
 int insercaoDireta();
 int bubbleSort();
+int shellSort();
 void showVetor(int *vet){
     printf("\n");
     for (int i=0; i<tam; i++) {
@@ -30,6 +31,7 @@ int main(int argc, const char * argv[]) {
         vetorSelDir[i]=v;
         vetorOrdDir[i]=v;
         vetorBubble[i]=v;
+        vetorShell[i] = v;
     }
     showVetor(vetorQuick);
     int trocas[4]={0,0,0,0};
@@ -72,10 +74,22 @@ int main(int argc, const char * argv[]) {
     
     showVetor(vetorBubble);
     
-    printf("Ordenação tempos e trocas:\nTempo em milisegundos para quick: %f e trocas: %d", tempoGasto[0],trocas[0]);
-    printf("\nTempo em milisegundos para selecao direta: %f e trocas: %d", tempoGasto[1],trocas[1]);
-    printf("\nTempo em milisegundos para ordenacao direta: %f e trocas: %d", tempoGasto[2],trocas[2]);
-    printf("\nTempo em milisegundos para bubble: %f e trocas: %d", tempoGasto[3],trocas[3]);
+    //Shell
+    tempoInicial = clock();
+    trocas[4]=shellSort();
+    tempoFinal = clock();
+    
+    tempoGasto[4] = (tempoFinal-tempoInicial)*1000/CLOCKS_PER_SEC;
+    
+    showVetor(vetorShell);
+  
+
+    printf("Ordenação tempos e trocas:\nTempo em milisegundos para quick: %f e Quantidade de trocas: %d", tempoGasto[0],trocas[0]);
+    printf("\nTempo em milisegundos para selecao direta: %f e Quantidade de trocas: %d", tempoGasto[1],trocas[1]);
+    printf("\nTempo em milisegundos para inserção direta: %f e Quantidade de trocas: %d", tempoGasto[2],trocas[2]);
+    printf("\nTempo em milisegundos para bubble: %f e Quantidade de trocas: %d", tempoGasto[3],trocas[3]);
+    printf("\nTempo em milisegundos para shell: %f e Quantidade de trocas: %d", tempoGasto[4],trocas[4]);
+
     
     return 0;
 }
@@ -173,3 +187,30 @@ int bubbleSort(){
     }
     return trocas;
 }
+
+
+//shell sort
+int shellSort(){
+    int i,j,aux,trocas;
+    int h = 1;
+    
+    do {
+        h = 3*h+1;
+    } while(h < tam);
+    do {
+        h /= 3;
+        for(i = h; i < tam; i++) {
+            aux = vetorShell[i];
+            j = i - h;
+            while (j >= 0 && aux < vetorShell[j]) {
+                vetorShell[j + h] = vetorShell[j];
+                j -= h;
+            }
+            vetorShell[j + h] = aux;
+            trocas++;
+        }
+    }while(h > 1);
+    return trocas;
+}
+
+
