@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define tam 1000
+#define tam 10000
 int vetorQuick[tam],vetorSelDir[tam],vetorOrdDir[tam],vetorBubble[tam], vetorShell[tam];
 void quickSort( int p, int r,int *trocas);
 int separa(int p, int r);
@@ -34,13 +34,13 @@ int main(int argc, const char * argv[]) {
         vetorShell[i] = v;
     }
     showVetor(vetorQuick);
-    int trocas[4]={0,0,0,0};
+    int trocas[5]={0,0,0,0,0};
     clock_t tempoInicial, tempoFinal;
-    double tempoGasto[4];
+    double tempoGasto[5]={0,0,0,0,0};
     
     //quick
     tempoInicial = clock();
-    quickSort(0, tam-1,&trocas[0]);
+    quickSort(0, tam-1,trocas);
     tempoFinal = clock();
     
     tempoGasto[0] = (tempoFinal-tempoInicial)*1000/CLOCKS_PER_SEC;
@@ -82,11 +82,11 @@ int main(int argc, const char * argv[]) {
     tempoGasto[4] = (tempoFinal-tempoInicial)*1000/CLOCKS_PER_SEC;
     
     showVetor(vetorShell);
-  
+  	
 
-    printf("Ordenação tempos e trocas:\nTempo em milisegundos para quick: %f e Quantidade de trocas: %d", tempoGasto[0],trocas[0]);
+    printf("Ordenacao tempos e trocas:\nTempo em milisegundos para quick: %f e Quantidade de trocas: %d", tempoGasto[0],trocas[0]);
     printf("\nTempo em milisegundos para selecao direta: %f e Quantidade de trocas: %d", tempoGasto[1],trocas[1]);
-    printf("\nTempo em milisegundos para inserção direta: %f e Quantidade de trocas: %d", tempoGasto[2],trocas[2]);
+    printf("\nTempo em milisegundos para insercao direta: %f e Quantidade de trocas: %d", tempoGasto[2],trocas[2]);
     printf("\nTempo em milisegundos para bubble: %f e Quantidade de trocas: %d", tempoGasto[3],trocas[3]);
     printf("\nTempo em milisegundos para shell: %f e Quantidade de trocas: %d", tempoGasto[4],trocas[4]);
 
